@@ -1,3 +1,9 @@
+// joystickExtension.js
+// Shane M. Clements, November 2013
+// Joystick Scratch Extension
+//
+// This is an extension for development and testing of the Scratch Javascript Extension API.
+
 new (function() {
     var device = null;
     var input = null;
@@ -11,7 +17,7 @@ new (function() {
         device.open();
 
         poller = setInterval(function() {
-            input = device.read(64);
+            input = device.read(48);
         }, 10);
 
 //        setInterval(function() { console.log(input); }, 100);
@@ -41,18 +47,21 @@ new (function() {
         return {status: 2, msg: 'Controller connected'};
     }
 
-    // Converts two 8 bit values into one 16 bit number
-    function to16Bit(hbyte, lbyte) { return (hbyte*256)+lbyte; }
+    // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
+    function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
     ext.readJoystick = function(name) {
         var retval = null;
         switch(name) {
-            case 'leftX': retval = to16Bit(input[1] , input[2]); break;
-            case 'leftY': retval = to16Bit(input[3] , input[4]); break;
-            case 'rightX': retval = to16Bit(input[5] , input[6]); break;
-            case 'rightY': retval = to16Bit(input[7] , input[8]); break;
+            case 'leftX': retval = convertByteStr(input[12] + input[13]); break;
+            case 'leftY': retval = -convertByteStr(input[14] + input[15]); break;
+            case 'rightX': retval = convertByteStr(input[16] + input[17]); break;
+            case 'rightY': retval = -convertByteStr(input[18] + input[19]); break;
         }
 
-        return retval;
+        // If it's hardly off center then treat it as centered
+        if(Math.abs(retval) < 0.1) retval = 0;
+
+        return retval.toFixed(2);
     }
 
     var descriptor = {
@@ -63,5 +72,5 @@ new (function() {
             joystickPart: ['leftX', 'leftY', 'rightX', 'rightY']
         }
     };
-    ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x461, product:0x20});
+    ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x054c, product:0x0268});
 })();
