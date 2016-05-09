@@ -57,7 +57,8 @@ new (function() {
         var retval = null;
         switch(name) {
             case 'leftX': retval = to16Bit(input[1] , input[2]); break;
-            case 'leftY': retval = to16Bit(input[3] , input[4]); break;
+            //case 'leftY': retval = to16Bit(input[3] , input[4]); break;
+            case 'leftY': retval = to16Bit(0,11); break;
             case 'rightX': retval = to16Bit(input[5] , input[6]); break;
             // case 'rightY': retval = to16Bit(input[7] , input[8]); break;
             case 'rightY': retval = to16Bit(3,0); break;
