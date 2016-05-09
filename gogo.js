@@ -4,12 +4,12 @@ new (function() {
     var poller = null;
     var ext = this;
 
-    function HIDReadCallback(buffer) { 
+    function HIDReadCallback(HIDbuffer) { 
         console.log("HID Callback ... ");
         //console.log( buffer);
         //input[1] = 0;
         //input[2] = buffer.byteLength ;
-        input=buffer;
+        input=HIDbuffer;
     };
 
     ext._deviceConnected = function(dev) {
