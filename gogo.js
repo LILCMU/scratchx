@@ -53,7 +53,8 @@ new (function() {
             case 'rightY': retval = 1023; break;
         }
 
-        return retval;
+        //return retval;
+        return 99;
     }
 
     var descriptor = {
