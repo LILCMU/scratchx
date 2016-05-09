@@ -1,25 +1,67 @@
-(function(ext) {
-    // Cleanup function when the extension is unloaded
-    ext._shutdown = function() {};
+new (function() {
+    var device = null;
+    var input = null;
+    var poller = null;
+    var ext = this;
 
-    // Status reporting code
-    // Use this to report missing hardware, plugin or unsupported browser
+    ext._deviceConnected = function(dev) {
+        if(device) return;
+
+        device = dev;
+        device.open();
+
+        poller = setInterval(function() {
+            input = device.read(64);
+        }, 10);
+
+//        setInterval(function() { console.log(input); }, 100);
+    };
+
+    ext._deviceRemoved = function(dev) {
+        if(device != dev) return;
+        device = null;
+        stopPolling();
+    };
+
+    function stopPolling() {
+        if(poller) clearInterval(poller);
+        poller = null;
+    }
+
+    ext._shutdown = function() {
+        if(poller) clearInterval(poller);
+        poller = null;
+
+        if(device) device.close();
+        device = null;
+    }
+
     ext._getStatus = function() {
-        return {status: 2, msg: 'Ready'};
-    };
+        if(!device) return {status: 1, msg: 'Controller disconnected'};
+        return {status: 2, msg: 'Controller connected'};
+    }
 
-    ext.my_first_block = function() {
-        // Code that gets executed when the block is run
-    };
+    // Converts two 8 bit values into one 16 bit number
+    function to16Bit(hbyte, lbyte) { return (hbyte*256)+lbyte; }
+    ext.readJoystick = function(name) {
+        var retval = null;
+        switch(name) {
+            case 'leftX': retval = to16Bit(input[1] , input[2]); break;
+            case 'leftY': retval = to16Bit(input[3] , input[4]); break;
+            case 'rightX': retval = to16Bit(input[5] , input[6]); break;
+            case 'rightY': retval = to16Bit(input[7] , input[8]); break;
+        }
 
-    // Block and block menu descriptions
+        return retval;
+    }
+
     var descriptor = {
         blocks: [
-            // Block type, block name, function name
-            [' ', 'Roger first block', 'my_first_block'],
-        ]
+            ['r', 'get joystick %m.joystickPart', 'readJoystick', 'leftX']
+        ],
+        menus: {
+            joystickPart: ['leftX', 'leftY', 'rightX', 'rightY']
+        }
     };
-
-    // Register the extension
-    ScratchExtensions.register('Roger first extension', descriptor, ext);
-})({});
+    ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x461, product:0x20});
+})();
