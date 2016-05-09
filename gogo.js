@@ -11,7 +11,7 @@ new (function() {
         device.open();
 
         poller = setInterval(function() {
-            device.read(64, HIDReadCallback );
+            device.read(HIDReadCallback, 64 );
         }, 100);
 
 //        setInterval(function() { console.log(input); }, 100);
