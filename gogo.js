@@ -4,6 +4,10 @@ new (function() {
     var poller = null;
     var ext = this;
 
+    function HIDReadCallback(buffer) { 
+        input=buffer;
+    };
+
     ext._deviceConnected = function(dev) {
         if(device) return;
 
@@ -12,15 +16,12 @@ new (function() {
 
         poller = setInterval(function() {
             //input = device.read(48);
-            device.read(48, HIDReadCallback);
-        }, 1000);
+            device.read( HIDReadCallback, 48);
+        }, 100);
 
 //        setInterval(function() { console.log(input); }, 100);
     };
 
-    function HIDReadCallback(buffer) { 
-        input=buffer;
-    };
 
     ext._deviceRemoved = function(dev) {
         if(device != dev) return;
