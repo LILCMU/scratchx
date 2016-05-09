@@ -5,6 +5,7 @@ new (function() {
     var ext = this;
 
     function HIDReadCallback(buffer) { 
+        console.log(buffer);
         input=buffer;
     };
 
