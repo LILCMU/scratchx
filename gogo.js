@@ -7,8 +7,8 @@ new (function() {
     function HIDReadCallback(buffer) { 
         //console.log(buffer);
         input[1] = 0;
-        input[2] = buffer.length;
-        input=buffer;
+        input[2] = 15;
+        //input=buffer;
     };
 
     ext._deviceConnected = function(dev) {
