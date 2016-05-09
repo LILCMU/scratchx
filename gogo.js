@@ -1,6 +1,6 @@
 new (function() {
     var device = null;
-    var input = null;
+    var input = [0,1,2,3,4,5,6,7,8,9,10];
     var poller = null;
     var ext = this;
 
@@ -13,7 +13,7 @@ new (function() {
         poller = setInterval(function() {
             input = device.read(48);
             //device.read(HIDReadCallback, 64 );
-        }, 100);
+        }, 1000);
 
 //        setInterval(function() { console.log(input); }, 100);
     };
