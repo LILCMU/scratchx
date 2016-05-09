@@ -12,7 +12,7 @@ new (function() {
 
         poller = setInterval(function() {
             device.read(64, function(buffer) { input=buffer;} );
-        }, 15);
+        }, 100);
 
 //        setInterval(function() { console.log(input); }, 100);
     };
@@ -50,11 +50,11 @@ new (function() {
             case 'leftY': retval = to16Bit(input[3] , input[4]); break;
             case 'rightX': retval = to16Bit(input[5] , input[6]); break;
             // case 'rightY': retval = to16Bit(input[7] , input[8]); break;
-            case 'rightY': retval = 1023; break;
+            case 'rightY': retval = to16Bit(3,0); break;
         }
 
         //return retval;
-        return 99;
+        return retval;
     }
 
     var descriptor = {
