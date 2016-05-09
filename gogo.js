@@ -1,4 +1,4 @@
-new (function() {
+(function() {
     var device = null;
     var input = null;
     var poller = null;
@@ -64,4 +64,4 @@ new (function() {
         }
     };
     ScratchExtensions.register('Joystick', descriptor, ext, {type: 'hid', vendor:0x461, product:0x20});
-})();
+});
