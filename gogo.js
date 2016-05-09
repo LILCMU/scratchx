@@ -11,10 +11,14 @@ new (function() {
         device.open();
 
         poller = setInterval(function() {
-            device.read(64, function(buffer) { input=buffer;} );
+            device.read(64, HIDReadCallback );
         }, 100);
 
 //        setInterval(function() { console.log(input); }, 100);
+    };
+
+    function HIDReadCallback(buffer) { 
+        input=buffer;
     };
 
     ext._deviceRemoved = function(dev) {
