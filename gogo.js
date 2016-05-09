@@ -6,10 +6,10 @@ new (function() {
 
     function HIDReadCallback(buffer) { 
         console.log("HID Callback ... ");
-        console.log(buffer);
+        //console.log( buffer);
         //input[1] = 0;
         //input[2] = buffer.byteLength ;
-        //input=buffer;
+        input=buffer;
     };
 
     ext._deviceConnected = function(dev) {
