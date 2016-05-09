@@ -5,7 +5,7 @@ new (function() {
     var ext = this;
 
     function HIDReadCallback(buffer) { 
-        console.log("HID Callback ... ")
+        console.log("HID Callback ... ");
         //console.log(buffer);
         input[1] = 0;
         //input[2] = buffer.byteLength ;
