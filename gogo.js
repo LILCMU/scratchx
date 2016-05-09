@@ -1,12 +1,12 @@
 new (function() {
     var device = null;
-    var input = [0,1,2,3,4,5,6,7,8,9,10];
+    var input = null;
     var poller = null;
     var ext = this;
 
     function HIDReadCallback(buffer) { 
         console.log("HID Callback ... ");
-        //console.log(buffer);
+        console.log(buffer);
         //input[1] = 0;
         //input[2] = buffer.byteLength ;
         //input=buffer;
