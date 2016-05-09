@@ -7,7 +7,7 @@ new (function() {
     function HIDReadCallback(buffer) { 
         //console.log(buffer);
         input[1] = 0;
-        input[2] = 15;
+        input[2] = buffer.length;
         //input=buffer;
     };
 
