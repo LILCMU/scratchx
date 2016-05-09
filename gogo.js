@@ -11,7 +11,7 @@ new (function() {
         device.open();
 
         poller = setInterval(function() {
-            input = device.read(63);
+            device.read(48, function(buffer) { input=buffer;} );
         }, 10);
 
 //        setInterval(function() { console.log(input); }, 100);
