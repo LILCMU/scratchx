@@ -54,7 +54,7 @@ new (function() {
     // Converts two 8 bit values into one 16 bit number
     function to16Bit(hbyte, lbyte) { return ((hbyte*256)+lbyte); }
     ext.readJoystick = function(name) {
-        var retval = null;
+        var retval = 0;
         switch(name) {
             case 'leftX': retval = to16Bit(input[1] , input[2]); break;
             //case 'leftY': retval = to16Bit(input[3] , input[4]); break;
