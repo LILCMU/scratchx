@@ -56,7 +56,8 @@ new (function() {
     ext.readJoystick = function(name) {
         var retval = 0;
         switch(name) {
-            case 'leftX': retval = to16Bit(input[1] , input[2]); break;
+            //case 'leftX': retval = to16Bit(input[1] , input[2]); break;
+            case 'leftX': retval = input[2]; break;
             //case 'leftY': retval = to16Bit(input[3] , input[4]); break;
             case 'leftY': retval = to16Bit(0,11); break;
             case 'rightX': retval = to16Bit(input[5] , input[6]); break;
