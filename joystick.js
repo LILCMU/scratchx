@@ -10,14 +10,27 @@ new (function() {
     var poller = null;
     var ext = this;
 
+    function HIDReadCallback(HIDbuffer) { 
+        //console.log("HID Callback ... ");
+        //console.log( buffer);
+        //input[1] = 0;
+        //input[2] = buffer.byteLength ;
+        input=HIDbuffer;
+    };
+
     ext._deviceConnected = function(dev) {
         if(device) return;
 
         device = dev;
         device.open();
 
+    //    poller = setInterval(function() {
+    //        input = device.read(48);
+    //    }, 10);
+        
         poller = setInterval(function() {
-            input = device.read(48);
+            //input = device.read(48);
+            device.read( HIDReadCallback, 48);
         }, 10);
 
 //        setInterval(function() { console.log(input); }, 100);
